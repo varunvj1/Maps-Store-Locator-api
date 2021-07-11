@@ -2,14 +2,24 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const Store = require('./api/models/store');
+const axios = require('axios');
+const MapboxService = require('./api/services/mapboxService');
+
+const mapboxService = new MapboxService();
 
 //Connect to mongoose
 mongoose.connect('mongodb+srv://varunvj1:7ypxQScHqqv48z5v@cluster0.0r3st.mongodb.net/storeLocator?retryWrites=true&w=majority',
     {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useCreateIndex: true
     });
 
+//Allow access to this API
+app.use(function (req, res, next) {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    next();
+});
 
 app.use(express.json({ limit: '50mb' }));
 
@@ -67,15 +77,36 @@ app.post('/api/stores', (req, res) => {
     // res.send(dbStores);
 })
 
-app.get('/api/stores', (req, res) => {
-    Store.find({}, (err, allStores) => {
-        if (err) {
-            res.status(500).send("Error");
-        }
-        else {
-            res.status(200).send(allStores);
-        }
-    })
+app.get('/api/stores/:zip_code', (req, res) => {
+
+    //Get the requested zip code from the user
+    const zipCode = req.params.zip_code;
+    mapboxService.getCoordinates(zipCode)
+        .then((zipCoordinates) => {
+            // Search for nearby stores in MongoDB database
+            Store.find({
+                location: {
+                    $near: {
+                        $maxDistance: 3200,
+                        $geometry: {
+                            type: "Point",
+                            coordinates: zipCoordinates
+                        }
+                    }
+                }
+            }, (err, stores) => {
+                if (err) {
+                    console.log(err);;
+                }
+                else {
+                    res.send(stores);
+                }
+            })
+
+        }).catch((error) => {
+            console.log(error);
+        })
+
 })
 
 app.delete('/api/stores', (req, res) => {
@@ -84,4 +115,4 @@ app.delete('/api/stores', (req, res) => {
     })
 })
 
-app.listen(5000);
+app.listen(3000);
