@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const Store = require('./api/models/store');
 const axios = require('axios');
 const MapboxService = require('./api/services/mapboxService');
+require('dotenv').config();
 
 const mapboxService = new MapboxService();
 
