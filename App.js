@@ -11,7 +11,7 @@ let port = process.env.PORT || 3000;
 const mapboxService = new MapboxService();
 
 //Connect to mongoose
-mongoose.connect('mongodb+srv://varunvj1:7ypxQScHqqv48z5v@cluster0.0r3st.mongodb.net/storeLocator?retryWrites=true&w=majority',
+mongoose.connect(process.env.MongoDB,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -31,23 +31,6 @@ app.post('/api/stores', (req, res) => {
 
     let dbStores = [];
     let stores = req.body;
-
-    // stores.forEach(store => {
-    //     dbStores.push({
-    //         storeName: store.name,
-    //         phoneNumber: store.phoneNumber,
-    //         address: store.address,
-    //         openStatusText: store.openStatusText,
-    //         addressLines: store.addressLines,
-    //         location: {
-    //             type: 'Point',
-    //             coordinates: [
-    //                 store.coordinates.longitude,
-    //                 store.coordinates.latitude,
-    //             ]
-    //         }
-    //     })
-    // });
 
     stores.forEach(store => {
         dbStores.push({
