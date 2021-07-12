@@ -8,11 +8,11 @@ class Mapbox {
 
         await axios.get(mapboxURL, {
             params: {
-                types: "postcode",
+                // types: "postcode",
+                // types: "region",
                 access_token: process.env.MAPBOX_API_ACCESS_TOKEN
             }
         }).then((response) => {
-
             const data = response.data;
             zipCoordinates = [
                 data.features[0].geometry.coordinates[0],

@@ -1,11 +1,31 @@
 const mongoose = require('mongoose');
 
+// const storeSchema = mongoose.Schema({
+//     storeName: String,
+//     phoneNumber: String,
+//     address: {},
+//     openStatusText: String,
+//     addressLines: Array,
+//     location: {
+//         type: {
+//             type: String,
+//             enum: ['Point'],
+//             required: true
+//         },
+//         coordinates: {
+//             type: [Number],
+//             required: true
+//         }
+//     }
+// });
+
+
 const storeSchema = mongoose.Schema({
     storeName: String,
-    phoneNumber: String,
-    address: {},
-    openStatusText: String,
-    addressLines: Array,
+    address: String,
+    brand: String,
+    city: String,
+    country: String,
     location: {
         type: {
             type: String,

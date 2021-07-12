@@ -6,6 +6,8 @@ const axios = require('axios');
 const MapboxService = require('./api/services/mapboxService');
 require('dotenv').config();
 
+let port = 3000;
+
 const mapboxService = new MapboxService();
 
 //Connect to mongoose
@@ -26,25 +28,39 @@ app.use(express.json({ limit: '50mb' }));
 
 
 app.post('/api/stores', (req, res) => {
-    // const userData = req.body;
 
-    // data.push(userData)
-    // res.send(`Store number ${userData.storeNumber} was pushed in the database!`);
     let dbStores = [];
     let stores = req.body;
+
+    // stores.forEach(store => {
+    //     dbStores.push({
+    //         storeName: store.name,
+    //         phoneNumber: store.phoneNumber,
+    //         address: store.address,
+    //         openStatusText: store.openStatusText,
+    //         addressLines: store.addressLines,
+    //         location: {
+    //             type: 'Point',
+    //             coordinates: [
+    //                 store.coordinates.longitude,
+    //                 store.coordinates.latitude,
+    //             ]
+    //         }
+    //     })
+    // });
 
     stores.forEach(store => {
         dbStores.push({
             storeName: store.name,
-            phoneNumber: store.phoneNumber,
             address: store.address,
-            openStatusText: store.openStatusText,
-            addressLines: store.addressLines,
+            brand: store.Brand,
+            city: store.City,
+            country: store.Country,
             location: {
-                type: 'Point',
+                type: "Point",
                 coordinates: [
-                    store.coordinates.longitude,
-                    store.coordinates.latitude,
+                    store.Longitude,
+                    store.Latitude,
                 ]
             }
         })
@@ -59,23 +75,7 @@ app.post('/api/stores', (req, res) => {
             res.status(200).send("Saved to Database!");
         }
     })
-    // console.log(dbStores);
 
-    //Store in database
-    // var store = new Store({
-    //     storeName: "Test",
-    //     phoneNumber: "9765345619",
-    //     location: {
-    //         type: 'Point',
-    //         coordinates: [
-    //             77.094190,  //Longitude
-    //             28.670730   //Latitude
-    //         ]
-    //     }
-    // })
-    // store.save();
-
-    // res.send(dbStores);
 })
 
 app.get('/api/stores/:zip_code', (req, res) => {
@@ -116,4 +116,4 @@ app.delete('/api/stores', (req, res) => {
     })
 })
 
-app.listen(3000);
+app.listen(port);
