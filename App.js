@@ -6,7 +6,7 @@ const axios = require('axios');
 const MapboxService = require('./api/services/mapboxService');
 require('dotenv').config();
 
-let port = 3000;
+let port = process.env.PORT || 3000;
 
 const mapboxService = new MapboxService();
 
