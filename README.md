@@ -1,4 +1,4 @@
-# Maps-Store-Locator-api
+# Starbucks-Store-Locator-api
 It is the API for the [Store Locator](https://github.com/varunvj1/Maps-Store-Locator) project. 
 
 ## Technologies:
