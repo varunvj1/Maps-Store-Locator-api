@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const Store = require('./api/models/store');
-const axios = require('axios');
 const MapboxService = require('./api/services/mapboxService');
 require('dotenv').config();
 
@@ -11,7 +10,7 @@ let port = process.env.PORT || 3000;
 const mapboxService = new MapboxService();
 
 //Connect to mongoose
-mongoose.connect(process.env.MongoDB,
+mongoose.connect('mongodb+srv://varunvj1:7ypxQScHqqv48z5v@cluster0.0r3st.mongodb.net/storeLocator?retryWrites=true&w=majority',
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
