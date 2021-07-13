@@ -8,7 +8,7 @@ class Mapbox {
 
         await axios.get(mapboxURL, {
             params: {
-                access_token: process.env.MAPBOX_API_ACCESS_TOKEN
+                access_token: 'pk.eyJ1IjoidmFydW52ajEiLCJhIjoiY2txczl0cng5MTU5ODJ1bzFsaGhra3Z6biJ9.W8R-7w5Tj56V9XFXKG6S5Q'
             }
         }).then((response) => {
             const data = response.data;
